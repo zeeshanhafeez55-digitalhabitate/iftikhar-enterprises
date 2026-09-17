@@ -1,0 +1,166 @@
+:root {
+  --primary: #C62828;
+  --primary-dark: #991B1B;
+  --primary-light: #FEF2F2;
+  --primary-soft: #FFF1F2;
+  --background: #FFF8F8;
+  --border: #F1D4D4;
+  --shadow-card: 0 10px 20px rgba(127, 29, 29, 0.06);
+}
+
+body {
+  background: var(--background);
+}
+
+#appShell {
+  background: var(--background);
+}
+
+.app-navbar {
+  background: linear-gradient(135deg, #7F1D1D 0%, #B91C1C 100%);
+  box-shadow: 0 8px 18px rgba(127, 29, 29, 0.16);
+}
+
+.brand-dot {
+  background: linear-gradient(180deg, #FCA5A5, #EF4444);
+  box-shadow: 0 0 0 3px rgba(254, 202, 202, 0.18);
+}
+
+#globalSearch:focus {
+  border-color: rgba(252, 165, 165, 0.8);
+  box-shadow: 0 0 0 0.2rem rgba(220, 38, 38, 0.25);
+}
+
+#navMenu .nav-link:hover {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  border-color: rgba(198, 40, 40, 0.14);
+}
+
+#navMenu .nav-link.active {
+  background: linear-gradient(180deg, #DC2626 0%, #991B1B 100%);
+  box-shadow: 0 8px 18px rgba(185, 28, 28, 0.2);
+}
+
+/* Distinct, accessible icon colors for each navigation area. Active items intentionally use white icons. */
+#navMenu .nav-link:not(.active) svg,
+#navMenu .nav-link:not(.active) i {
+  stroke: var(--primary);
+}
+#navMenu [data-page="dashboard"]:not(.active) svg { stroke: #C62828; }
+#navMenu [data-page="pos"]:not(.active) svg { stroke: #E11D48; }
+#navMenu [data-page="sales"]:not(.active) svg { stroke: #B91C1C; }
+#navMenu [data-page="returns"]:not(.active) svg { stroke: #EA580C; }
+#navMenu [data-page="orders"]:not(.active) svg { stroke: #D97706; }
+#navMenu [data-page="products"]:not(.active) svg { stroke: #9333EA; }
+#navMenu [data-page="stock"]:not(.active) svg { stroke: #7C3AED; }
+#navMenu [data-page="purchases"]:not(.active) svg { stroke: #C2410C; }
+#navMenu [data-page="customers"]:not(.active) svg { stroke: #0891B2; }
+#navMenu [data-page="suppliers"]:not(.active) svg { stroke: #0F766E; }
+#navMenu [data-page="expenses"]:not(.active) svg { stroke: #16A34A; }
+#navMenu [data-page="reports"]:not(.active) svg { stroke: #2563EB; }
+#navMenu [data-page="admin"]:not(.active) svg { stroke: #475569; }
+#navMenu [data-page="settings"]:not(.active) svg { stroke: #64748B; }
+#navMenu [data-page="users"]:not(.active) svg { stroke: #4F46E5; }
+
+#navMenu .nav-link.active svg,
+#navMenu .nav-link.active i {
+  stroke: #fff;
+}
+
+.page-title,
+.modal-title,
+.card-header {
+  color: #7F1D1D;
+}
+
+.card,
+.form-control,
+.form-select,
+#sidebar,
+#searchResults {
+  border-color: var(--border) !important;
+}
+
+.card-header,
+.table thead th {
+  background: #FFF7F7;
+}
+
+.table {
+  --bs-table-hover-bg: rgba(198, 40, 40, 0.035);
+}
+
+.table tbody tr:hover {
+  background: rgba(198, 40, 40, 0.035);
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus {
+  background: #C62828;
+  border-color: #C62828;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: #991B1B;
+  border-color: #991B1B;
+}
+
+.btn-outline-primary {
+  color: #B91C1C;
+  border-color: rgba(185, 28, 28, 0.25);
+  background: #FFF7F7;
+}
+
+.btn-outline-primary:hover {
+  color: #991B1B;
+  border-color: rgba(185, 28, 28, 0.45);
+  background: #FEE2E2;
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  border-color: #DC2626;
+  box-shadow: 0 0 0 0.2rem rgba(220, 38, 38, 0.14);
+}
+
+.form-check-input:checked {
+  background-color: #C62828;
+  border-color: #C62828;
+}
+
+.alert-info {
+  background: #FFF1F2;
+  border-color: rgba(198, 40, 40, 0.14);
+  color: #991B1B;
+}
+
+#productGrid .btn:hover {
+  background: #FFF7F7;
+  border-color: rgba(198, 40, 40, 0.25);
+}
+
+#loginScreen {
+  background: linear-gradient(135deg, #FFF1F2 0%, #FFF8F8 100%);
+}
+
+#loginScreen .card {
+  border-color: rgba(198, 40, 40, 0.12);
+  box-shadow: 0 26px 48px rgba(127, 29, 29, 0.1);
+}
+
+.login-mark {
+  background: #FEE2E2;
+  color: #B91C1C;
+}
+
+#searchResults .list-group-item:hover {
+  background: #FFF1F2;
+}
+
+@media print {
+  body { background: #fff; }
+}
