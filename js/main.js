@@ -146,7 +146,7 @@ document.addEventListener("click", (e) => {
 
 // ---------- session ----------
 
-onStateChange(({ user, profile, ready }) => {
+onStateChange(({ user, profile, ready, error }) => {
   if (!ready) return;
 
   if (user && profile) {
@@ -160,6 +160,10 @@ onStateChange(({ user, profile, ready }) => {
     appShell.classList.add("d-none");
     loginScreen.classList.remove("d-none");
     loginForm.reset();
+    if (error) {
+      loginError.textContent = error;
+      loginError.classList.remove("d-none");
+    }
   }
 });
 

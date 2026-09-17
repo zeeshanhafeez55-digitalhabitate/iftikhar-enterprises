@@ -8,7 +8,8 @@ export const state = {
   user: null,       // Firebase auth user
   profile: null,    // /users/{uid} doc
   roleDoc: null,    // /roles/{roleId} doc
-  ready: false
+  ready: false,
+  error: null       // Login errors like missing profile
 };
 
 const listeners = [];
@@ -34,13 +35,24 @@ onAuthStateChanged(auth, async (user) => {
         state.user = null;
         state.profile = null;
         state.ready = true;
+        state.error = "Account is disabled.";
         notify();
         return;
       }
       state.roleDoc = await getRole(state.profile.role);
+    } else {
+      // User is authenticated but missing a Firestore document
+      await signOut(auth);
+      state.user = null;
+      state.profile = null;
+      state.ready = true;
+      state.error = "User profile not found in database. Please contact an administrator.";
+      notify();
+      return;
     }
   }
   state.ready = true;
+  state.error = null; // Clear error on successful login
   notify();
 });
 
