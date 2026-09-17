@@ -6,7 +6,14 @@ import { round2 } from "../pricing.js";
 export async function renderDashboard(container) {
   container.innerHTML = `<div class="page-title">Dashboard</div><div class="text-muted">Loading...</div>`;
 
-  const d = await loadReportData();
+  let d;
+  try {
+    d = await loadReportData();
+  } catch (err) {
+    container.innerHTML = `<div class="page-title">Dashboard</div><div class="alert alert-danger">Failed to load data: ${err.message}</div>`;
+    console.error("Dashboard load error:", err);
+    return;
+  }
   const today = rangePreset("today");
   const month = rangePreset("month");
 

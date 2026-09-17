@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="module">
+import { createStaffUser, login } from './js/auth.js';
+import { db, doc, setDoc, serverTimestamp } from './js/firebase-init.js';
+
+async function run() {
+  try {
+    try {
+      await createStaffUser({
+        email: "waqar5419@gmail.com",
+        password: "waqar123",
+        name: "Waqar Admin",
+        role: "SUPER_ADMIN"
+      });
+      console.log("SUCCESS_CREATED");
+    } catch(e) {
+      if (e.code === 'auth/email-already-in-use') {
+        const user = await login("waqar5419@gmail.com", "waqar123");
+        await setDoc(doc(db, "users", user.uid), {
+          name: "Waqar Admin",
+          email: "waqar5419@gmail.com",
+          role: "SUPER_ADMIN",
+          active: true,
+          createdAt: serverTimestamp()
+        });
+        console.log("SUCCESS_UPDATED");
+      } else {
+        throw e;
+      }
+    }
+  } catch(err) {
+    console.error("ERROR_SETUP:", err);
+  }
+}
+run();
+</script>
+</body>
+</html>
