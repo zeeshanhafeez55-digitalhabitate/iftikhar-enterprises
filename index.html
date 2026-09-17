@@ -4,86 +4,73 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Iftikhar Enterprises — POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="css/app.css">
+<script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div id="loginScreen" class="d-flex align-items-center justify-content-center vh-100 bg-light">
   <div class="card shadow-sm p-4" style="width:360px;">
+    <div class="login-mark"><i data-lucide="store"></i></div>
     <h4 class="mb-1">Iftikhar Enterprises</h4>
     <div class="text-muted mb-3 small">Foam, Mattress, Bedding &amp; Healthcare</div>
     <div id="loginError" class="alert alert-danger d-none py-2 small"></div>
     <form id="loginForm">
-      <div class="mb-2">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-control" id="loginEmail" required autocomplete="username">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input type="password" class="form-control" id="loginPassword" required autocomplete="current-password">
-      </div>
-      <button class="btn btn-primary w-100" type="submit">Sign In</button>
+      <div class="mb-2"><label class="form-label">Email</label><input type="email" class="form-control" id="loginEmail" required autocomplete="username"></div>
+      <div class="mb-3"><label class="form-label">Password</label><input type="password" class="form-control" id="loginPassword" required autocomplete="current-password"></div>
+      <button class="btn btn-primary w-100" type="submit"><i data-lucide="log-in"></i> Sign In</button>
     </form>
   </div>
 </div>
 
 <!-- APP -->
 <div id="appShell" class="d-none">
-  <nav class="navbar navbar-dark bg-dark px-3 py-2 sticky-top">
+  <nav class="navbar app-navbar px-3 py-2 sticky-top">
     <div class="d-flex align-items-center gap-2">
-      <button class="btn btn-outline-light btn-sm d-lg-none" id="menuToggle">☰</button>
-      <span class="navbar-brand mb-0 h6">Iftikhar Enterprises</span>
+      <button class="btn btn-outline-light btn-sm d-lg-none" id="menuToggle" title="Open navigation" aria-label="Open navigation"><i data-lucide="menu"></i></button>
+      <span class="navbar-brand mb-0 h6"><span class="brand-dot"></span>Iftikhar Enterprises</span>
     </div>
-
     <div class="position-relative flex-grow-1 mx-3 d-none d-md-block" id="globalSearchWrap" style="max-width:420px">
-      <input class="form-control form-control-sm" id="globalSearch"
-             placeholder="Search products, customers, suppliers, invoices...">
+      <i data-lucide="search" class="search-icon"></i>
+      <input class="form-control form-control-sm" id="globalSearch" placeholder="Search products, customers, suppliers, invoices..." aria-label="Global search">
       <div class="list-group position-absolute w-100 shadow d-none" id="searchResults" style="z-index:1050; max-height:340px; overflow:auto;"></div>
     </div>
-
-    <div class="d-flex align-items-center text-light">
-      <span id="userLabel" class="me-3 small d-none d-sm-inline"></span>
-      <button id="logoutBtn" class="btn btn-outline-light btn-sm">Logout</button>
-    </div>
+    <div class="d-flex align-items-center text-light"><span id="userLabel" class="me-3 small d-none d-sm-inline"></span><button id="logoutBtn" class="btn btn-outline-light btn-sm"><i data-lucide="log-out"></i> Logout</button></div>
   </nav>
 
   <div class="d-flex">
-    <div id="sidebar" class="bg-white border-end p-2" style="width:215px; min-width:215px; height:calc(100vh - 52px); overflow-y:auto; position:sticky; top:52px;">
+    <div id="sidebar" class="bg-white border-end p-2" style="width:235px; min-width:235px; height:calc(100vh - 52px); overflow-y:auto; position:sticky; top:52px;">
       <div class="nav nav-pills flex-column gap-1" id="navMenu">
-        <button class="nav-link text-start active" data-page="dashboard">Dashboard</button>
-
+        <button class="nav-link text-start active" data-page="dashboard"><i data-lucide="layout-dashboard"></i> Dashboard</button>
         <div class="nav-section">Sales</div>
-        <button class="nav-link text-start fw-semibold" data-page="pos" data-perm="sales:create">POS / Billing</button>
-        <button class="nav-link text-start" data-page="sales" data-perm="sales:view">Sales History</button>
-        <button class="nav-link text-start" data-page="returns" data-perm="sales:view">Returns</button>
-        <button class="nav-link text-start" data-page="orders" data-perm="sales:view">Orders &amp; Delivery</button>
-
+        <button class="nav-link text-start fw-semibold" data-page="pos" data-perm="sales:create"><i data-lucide="shopping-cart"></i> POS / Billing</button>
+        <button class="nav-link text-start" data-page="sales" data-perm="sales:view"><i data-lucide="receipt-text"></i> Sales History</button>
+        <button class="nav-link text-start" data-page="returns" data-perm="sales:view"><i data-lucide="rotate-ccw"></i> Returns</button>
+        <button class="nav-link text-start" data-page="orders" data-perm="sales:view"><i data-lucide="truck"></i> Orders &amp; Delivery</button>
         <div class="nav-section">Inventory</div>
-        <button class="nav-link text-start" data-page="products" data-perm="products:view">Products</button>
-        <button class="nav-link text-start" data-page="stock" data-perm="stock:view">Stock</button>
-        <button class="nav-link text-start" data-page="purchases" data-perm="purchases:view">Purchases</button>
-
+        <button class="nav-link text-start" data-page="products" data-perm="products:view"><i data-lucide="package"></i> Products</button>
+        <button class="nav-link text-start" data-page="stock" data-perm="stock:view"><i data-lucide="boxes"></i> Stock</button>
+        <button class="nav-link text-start" data-page="purchases" data-perm="purchases:view"><i data-lucide="shopping-bag"></i> Purchases</button>
         <div class="nav-section">Parties</div>
-        <button class="nav-link text-start" data-page="customers" data-perm="customers:view">Customers</button>
-        <button class="nav-link text-start" data-page="suppliers" data-perm="suppliers:view">Suppliers</button>
-
+        <button class="nav-link text-start" data-page="customers" data-perm="customers:view"><i data-lucide="users"></i> Customers</button>
+        <button class="nav-link text-start" data-page="suppliers" data-perm="suppliers:view"><i data-lucide="factory"></i> Suppliers</button>
         <div class="nav-section">Accounts</div>
-        <button class="nav-link text-start" data-page="expenses" data-perm="expenses:view">Expenses &amp; Cash</button>
-        <button class="nav-link text-start" data-page="reports" data-perm="reports:view">Reports</button>
-
+        <button class="nav-link text-start" data-page="expenses" data-perm="expenses:view"><i data-lucide="wallet"></i> Expenses &amp; Cash</button>
+        <button class="nav-link text-start" data-page="reports" data-perm="reports:view"><i data-lucide="bar-chart-3"></i> Reports</button>
         <div class="nav-section">Administration</div>
-        <button class="nav-link text-start" data-page="admin" data-perm="reports:view">Admin</button>
-        <button class="nav-link text-start" data-page="settings" data-perm="settings:view">Settings</button>
-        <button class="nav-link text-start" data-page="users" data-perm="users:view">Users &amp; Roles</button>
+        <button class="nav-link text-start" data-page="admin" data-perm="reports:view"><i data-lucide="shield-check"></i> Administration</button>
+        <button class="nav-link text-start" data-page="settings" data-perm="settings:view"><i data-lucide="settings"></i> Settings</button>
+        <button class="nav-link text-start" data-page="users" data-perm="users:view"><i data-lucide="user-cog"></i> Users &amp; Roles</button>
       </div>
     </div>
-
     <div class="flex-grow-1 p-3 p-lg-4" id="pageContent" style="overflow-x:auto; min-width:0;"></div>
   </div>
 </div>
-
 <script type="module" src="js/main.js"></script>
 </body>
 </html>
