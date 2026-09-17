@@ -48,6 +48,12 @@ const PAGES = {
 let currentPage = "dashboard";
 let searchIndex = null;
 
+function initLucideIcons() {
+  if (window.lucide && typeof window.lucide.createIcons === "function") {
+    window.lucide.createIcons();
+  }
+}
+
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   loginError.classList.add("d-none");
@@ -77,6 +83,7 @@ export function navigate(page) {
   [...navMenu.children].forEach(b => b.classList.toggle("active", b.dataset.page === page));
   const render = PAGES[page];
   if (render) render(pageContent);
+  setTimeout(initLucideIcons, 0);
 }
 
 function applyMenuPermissions() {
@@ -156,6 +163,7 @@ onStateChange(({ user, profile, ready, error }) => {
     applyMenuPermissions();
     searchIndex = null;
     navigate(currentPage);
+    setTimeout(initLucideIcons, 0);
   } else {
     appShell.classList.add("d-none");
     loginScreen.classList.remove("d-none");
@@ -164,9 +172,10 @@ onStateChange(({ user, profile, ready, error }) => {
       loginError.textContent = error;
       loginError.classList.remove("d-none");
     }
+    setTimeout(initLucideIcons, 0);
   }
 });
 
 function escHtml(v) {
-  return String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  return String(v ?? "").replace(/[&<>\"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
