@@ -1,0 +1,284 @@
+/* ===== Design tokens ===== */
+:root {
+  --ink: #16323A;
+  --ink-soft: #23474F;
+  --accent: #C97D3E;
+  --accent-dark: #A8622B;
+  --accent-rgb: 201, 125, 62;
+  --gold: #D6A23C;
+  --gold-rgb: 214, 162, 60;
+  --forest: #2F6F4E;
+  --forest-rgb: 47, 111, 78;
+  --brick: #B33B30;
+  --brick-rgb: 179, 59, 48;
+  --surface: #EFF1F0;
+  --border: #DBDFDC;
+  --font-sans: 'IBM Plex Sans', -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --radius: 4px;
+
+  /* Retarget Bootstrap's own variables so every utility, badge and button follows the palette */
+  --bs-body-font-family: var(--font-sans);
+  --bs-body-bg: var(--surface);
+  --bs-body-color: var(--ink);
+  --bs-border-color: var(--border);
+  --bs-border-color-translucent: var(--border);
+  --bs-link-color: var(--accent-dark);
+  --bs-link-hover-color: var(--ink);
+
+  --bs-primary: var(--accent);
+  --bs-primary-rgb: var(--accent-rgb);
+  --bs-secondary: #5B6B6E;
+  --bs-secondary-rgb: 91, 107, 110;
+  --bs-success: var(--forest);
+  --bs-success-rgb: var(--forest-rgb);
+  --bs-danger: var(--brick);
+  --bs-danger-rgb: var(--brick-rgb);
+  --bs-warning: var(--gold);
+  --bs-warning-rgb: var(--gold-rgb);
+  --bs-dark: var(--ink);
+  --bs-dark-rgb: 22, 50, 58;
+  --bs-light: #F6F7F6;
+  --bs-light-rgb: 246, 247, 246;
+
+  --bs-focus-ring-color: rgba(var(--accent-rgb), .3);
+}
+
+* { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; animation: none !important; }
+}
+
+body {
+  font-size: 14px;
+  letter-spacing: 0.0025em;
+}
+
+h1, h2, h3, h4, h5, h6, .page-title { color: var(--ink); font-weight: 600; }
+
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ===== Buttons: retone the compiled Bootstrap variants via their local vars ===== */
+.btn { border-radius: var(--radius); font-weight: 500; }
+
+.btn-primary {
+  --bs-btn-bg: var(--accent);
+  --bs-btn-border-color: var(--accent);
+  --bs-btn-hover-bg: var(--accent-dark);
+  --bs-btn-hover-border-color: var(--accent-dark);
+  --bs-btn-active-bg: var(--accent-dark);
+  --bs-btn-active-border-color: var(--accent-dark);
+  --bs-btn-disabled-bg: var(--accent);
+  --bs-btn-disabled-border-color: var(--accent);
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--accent-dark);
+  --bs-btn-border-color: var(--accent);
+  --bs-btn-hover-bg: var(--accent);
+  --bs-btn-hover-border-color: var(--accent);
+  --bs-btn-active-bg: var(--accent-dark);
+  --bs-btn-active-border-color: var(--accent-dark);
+}
+.btn-dark, .btn-outline-dark {
+  --bs-btn-bg: var(--ink);
+  --bs-btn-border-color: var(--ink);
+  --bs-btn-color: #fff;
+  --bs-btn-hover-bg: var(--ink-soft);
+  --bs-btn-hover-border-color: var(--ink-soft);
+  --bs-btn-active-bg: var(--ink-soft);
+}
+.btn-outline-dark {
+  --bs-btn-bg: transparent;
+  --bs-btn-color: var(--ink);
+  --bs-btn-hover-color: #fff;
+}
+.btn-success {
+  --bs-btn-bg: var(--forest);
+  --bs-btn-border-color: var(--forest);
+  --bs-btn-hover-bg: #244f38;
+  --bs-btn-hover-border-color: #244f38;
+}
+.btn-outline-success {
+  --bs-btn-color: var(--forest);
+  --bs-btn-border-color: var(--forest);
+  --bs-btn-hover-bg: var(--forest);
+}
+.btn-danger {
+  --bs-btn-bg: var(--brick);
+  --bs-btn-border-color: var(--brick);
+}
+.btn-outline-danger {
+  --bs-btn-color: var(--brick);
+  --bs-btn-border-color: var(--brick);
+  --bs-btn-hover-bg: var(--brick);
+}
+.btn-outline-secondary {
+  --bs-btn-color: #5B6B6E;
+  --bs-btn-border-color: var(--border);
+  --bs-btn-hover-bg: #5B6B6E;
+  --bs-btn-hover-border-color: #5B6B6E;
+}
+
+/* ===== Cards: flat, hairline, no soft-shadow-card-kit look ===== */
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: none;
+  background: #fff;
+}
+.card-header {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+/* Numbers read as data, not prose */
+.card .fw-bold, table .text-end, .modal .text-end {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Tables ===== */
+.table { --bs-table-color: var(--ink); }
+.table thead th, thead.table-light th {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #5B6B6E;
+  font-weight: 600;
+  border-bottom-width: 1px;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-accent-bg: #FAFAF8;
+}
+
+/* ===== Navbar ===== */
+.navbar.bg-dark {
+  background-color: var(--ink) !important;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.brand-mark { flex-shrink: 0; }
+
+#globalSearch {
+  border-color: rgba(255,255,255,.18);
+}
+
+/* ===== Sidebar: left accent bar instead of filled pill ===== */
+#navMenu .nav-link {
+  color: #385058;
+  border-radius: 0;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.86rem;
+  background: none;
+  transition: background-color .12s ease, color .12s ease, border-color .12s ease;
+}
+#navMenu .nav-link:hover {
+  background-color: rgba(var(--accent-rgb), .08);
+  color: var(--ink);
+}
+#navMenu .nav-link.active {
+  background-color: rgba(var(--accent-rgb), .12);
+  border-left-color: var(--accent);
+  color: var(--ink);
+  font-weight: 600;
+}
+#navMenu .nav-link[data-hidden="true"] { display: none; }
+
+.nav-section {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #8B9A9C;
+  padding: 0.7rem 0.7rem 0.2rem;
+  font-weight: 600;
+}
+
+/* ===== Page chrome ===== */
+.page-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.badge { font-weight: 500; letter-spacing: 0.01em; border-radius: 3px; }
+
+/* ===== Forms ===== */
+.form-control, .form-select {
+  border-color: var(--border);
+  border-radius: var(--radius);
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), .18);
+}
+.form-label { font-size: 0.78rem; font-weight: 500; color: #385058; }
+
+/* Visible keyboard focus everywhere, not just inputs */
+a:focus-visible, button:focus-visible, .nav-link:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== Login screen: the one deliberate hero moment ===== */
+#loginScreen {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(var(--accent-rgb), .10), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(var(--gold-rgb), .10), transparent 45%),
+    var(--ink) !important;
+}
+#loginScreen .card {
+  border: none;
+  box-shadow: 0 24px 60px rgba(0,0,0,.35);
+  padding: 2.25rem !important;
+}
+#loginScreen .brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.35rem;
+}
+#loginScreen h4 { margin: 0; font-size: 1.3rem; }
+
+/* ===== POS product grid ===== */
+#productGrid .btn {
+  min-height: 64px;
+  border-radius: var(--radius);
+}
+#productGrid .btn-outline-primary {
+  --bs-btn-border-color: var(--border);
+  --bs-btn-color: var(--ink);
+}
+#productGrid .btn-outline-primary:hover {
+  --bs-btn-bg: rgba(var(--accent-rgb), .08);
+  --bs-btn-color: var(--ink);
+  --bs-btn-border-color: var(--accent);
+}
+
+.modal.d-block { overflow-y: auto; }
+
+/* ===== Layout / responsive ===== */
+@media (max-width: 991.98px) {
+  #sidebar {
+    position: fixed !important;
+    z-index: 1040;
+    box-shadow: 0 0 24px rgba(0,0,0,.18);
+  }
+}
+
+@media print {
+  #sidebar, .navbar, .btn { display: none !important; }
+  #pageContent { padding: 0 !important; }
+}
