@@ -1,0 +1,11 @@
+{
+  "indexes": [
+    { "collectionGroup": "stockMovements", "queryScope": "COLLECTION", "fields": [
+      { "fieldPath": "productId", "order": "ASCENDING" }, { "fieldPath": "at", "order": "ASCENDING" } ] },
+    { "collectionGroup": "customerLedger", "queryScope": "COLLECTION", "fields": [
+      { "fieldPath": "customerId", "order": "ASCENDING" }, { "fieldPath": "at", "order": "ASCENDING" } ] },
+    { "collectionGroup": "supplierLedger", "queryScope": "COLLECTION", "fields": [
+      { "fieldPath": "supplierId", "order": "ASCENDING" }, { "fieldPath": "at", "order": "ASCENDING" } ] }
+  ],
+  "fieldOverrides": []
+}

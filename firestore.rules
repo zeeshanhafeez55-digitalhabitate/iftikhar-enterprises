@@ -1,0 +1,176 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function role() {
+      return userDoc().data.role;
+    }
+
+    function isActive() {
+      return userDoc().data.active == true;
+    }
+
+    function hasPerm(module, action) {
+      return isSignedIn() && isActive() &&
+        get(/databases/$(database)/documents/roles/$(role())).data.permissions[module][action] == true;
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn() && isActive() && role() == 'SUPER_ADMIN';
+    }
+
+    // Users can read their own doc; only Super Admin/Admin manage users
+    match /users/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || hasPerm('users', 'view'));
+      allow create, update, delete: if isSuperAdmin() || hasPerm('users', 'edit');
+    }
+
+    match /roles/{roleId} {
+      allow read: if isSignedIn();
+      allow write: if isSuperAdmin();
+    }
+
+    match /businesses/{id} {
+      allow read: if isSignedIn();
+      allow write: if isSuperAdmin() || hasPerm('settings', 'edit');
+    }
+
+    match /branches/{id} {
+      allow read: if isSignedIn();
+      allow write: if isSuperAdmin() || hasPerm('settings', 'edit');
+    }
+
+    match /warehouses/{id} {
+      allow read: if isSignedIn();
+      allow write: if isSuperAdmin() || hasPerm('settings', 'edit');
+    }
+
+    match /settings/{id} {
+      allow read: if isSignedIn();
+      allow write: if isSuperAdmin() || hasPerm('settings', 'edit');
+    }
+
+    match /categories/{id} {
+      allow read: if isSignedIn();
+      allow write: if hasPerm('products', 'edit');
+    }
+
+    match /brands/{id} {
+      allow read: if isSignedIn();
+      allow write: if hasPerm('products', 'edit');
+    }
+
+    match /products/{id} {
+      allow read: if isSignedIn();
+      allow create, update: if hasPerm('products', 'edit');
+      allow delete: if hasPerm('products', 'delete');
+    }
+
+    match /customers/{id} {
+      allow read: if isSignedIn() && hasPerm('customers', 'view');
+      allow create, update: if hasPerm('customers', 'edit');
+      allow delete: if hasPerm('customers', 'delete');
+    }
+
+    match /suppliers/{id} {
+      allow read: if isSignedIn() && hasPerm('suppliers', 'view');
+      allow create, update: if hasPerm('suppliers', 'edit');
+      allow delete: if hasPerm('suppliers', 'delete');
+    }
+
+    match /sales/{id} {
+      allow read: if isSignedIn() && hasPerm('sales', 'view');
+      allow create: if hasPerm('sales', 'create');
+      allow update: if hasPerm('sales', 'edit');
+      allow delete: if hasPerm('sales', 'delete');
+    }
+
+    match /saleItems/{id} {
+      allow read: if isSignedIn() && hasPerm('sales', 'view');
+      allow write: if hasPerm('sales', 'create');
+    }
+
+    match /saleReturns/{id} {
+      allow read: if isSignedIn() && hasPerm('sales', 'view');
+      allow write: if hasPerm('sales', 'refund');
+    }
+
+    match /purchases/{id} {
+      allow read: if isSignedIn() && hasPerm('purchases', 'view');
+      allow create, update: if hasPerm('purchases', 'edit');
+      allow delete: if hasPerm('purchases', 'delete');
+    }
+
+    match /purchaseItems/{id} {
+      allow read: if isSignedIn() && hasPerm('purchases', 'view');
+      allow write: if hasPerm('purchases', 'edit');
+    }
+
+    match /purchaseReturns/{id} {
+      allow read: if isSignedIn() && hasPerm('purchases', 'view');
+      allow write: if hasPerm('purchases', 'edit');
+    }
+
+    match /stockMovements/{id} {
+      allow read: if isSignedIn() && hasPerm('stock', 'view');
+      // stock movements are written by trusted server logic / trusted client flows only
+      allow create: if hasPerm('stock', 'edit');
+      allow update, delete: if false;
+    }
+
+    match /payments/{id} {
+      allow read: if isSignedIn() && hasPerm('reports', 'view');
+      allow create: if hasPerm('sales', 'create') || hasPerm('purchases', 'edit');
+      allow update, delete: if isSuperAdmin();
+    }
+
+    match /expenses/{id} {
+      allow read: if isSignedIn() && hasPerm('expenses', 'view');
+      allow create, update: if hasPerm('expenses', 'edit');
+      allow delete: if hasPerm('expenses', 'delete');
+    }
+
+    match /cashTransactions/{id} {
+      allow read: if isSignedIn() && hasPerm('reports', 'view');
+      allow create: if isSignedIn();
+      allow update, delete: if isSuperAdmin();
+    }
+
+    match /customerLedger/{id} {
+      allow read: if isSignedIn() && hasPerm('customers', 'view');
+      allow create: if hasPerm('sales', 'create') || hasPerm('customers', 'edit');
+      allow update, delete: if false; // ledger entries are append-only
+    }
+
+    match /supplierLedger/{id} {
+      allow read: if isSignedIn() && hasPerm('suppliers', 'view');
+      allow create: if hasPerm('purchases', 'edit') || hasPerm('suppliers', 'edit');
+      allow update, delete: if false; // ledger entries are append-only
+    }
+
+    match /customOrders/{id} {
+      allow read: if isSignedIn() && hasPerm('sales', 'view');
+      allow create, update: if hasPerm('sales', 'create');
+      allow delete: if hasPerm('sales', 'delete');
+    }
+
+    match /deliveries/{id} {
+      allow read: if isSignedIn();
+      allow write: if hasPerm('sales', 'edit');
+    }
+
+    match /auditLogs/{id} {
+      allow read: if isSuperAdmin() || hasPerm('reports', 'view');
+      allow create: if isSignedIn();
+      allow update, delete: if false;
+    }
+  }
+}
